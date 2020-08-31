@@ -14,18 +14,60 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  padding: 34px 28px 14px;
+  font-size: 24px;
+  font-family: "Noto Serif", serif;
+  font-weight: 400;
+  display: inline-block;
   color: white;
+}
+
+body {
+  justify-content: center;
+  background-color: #000;
+  font-family: "Poppins", sans-serif;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.btn {
+  border: none;
+  background-color: inherit;
+  font-size: 24px;
+  font-family: "Noto Serif", serif;
+  font-weight: 400;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  outline: black;
+}
+
+.field {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  width: 200px;
+  font-size: 80px;
+  font-family: "Noto Serif", serif;
+  font-weight: 400;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  margin: auto;
+  display: block;
+  outline: black;
+}
+
+.fadein {
+  opacity: 0.8;
+  transition: opacity 1s;
+}
+
+.fadeout {
+  opacity: 0.3;
+  transition: opacity 1s;
 }
 
 @keyframes App-logo-spin {
