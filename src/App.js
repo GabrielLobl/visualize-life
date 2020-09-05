@@ -50,7 +50,7 @@ function App() {
   }, [time]);
 
   const inputField = (
-    <>
+    <form>
       <input
         className="field"
         autoFocus={true}
@@ -64,7 +64,7 @@ function App() {
       >
         visualize
       </button>
-    </>
+    </form>
   );
 
   const MonthGrid = () => {
