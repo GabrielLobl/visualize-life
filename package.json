@@ -12,7 +12,7 @@
     "react-fade-in": "^1.1.0",
     "react-scripts": "3.4.3"
   },
-  "homepage": "./",
+  "homepage": "https://gabriellobl.github.io/visualize-life",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
