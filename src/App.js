@@ -1,8 +1,19 @@
+/*global chrome*/
+
 import React, { useState, useEffect } from "react";
 import FadeIn from "react-fade-in";
 import "./App.css";
 
 function App() {
+  chrome.storage.sync.get(["key", "time"], function (result) {
+    setSubmitted(Boolean(result.key));
+    console.log(result.time);
+    if (Boolean(result.key)) {
+      setAge(result.key);
+      setTime(result.time);
+    }
+  });
+
   const rowDict = { month: 27, year: 6, week: 65 };
   const colDict = { month: 40, year: 15, week: 72 };
 
@@ -13,22 +24,40 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    // console.log("saved age");
+    chrome.storage.sync.set({ key: age }, function () {
+      // console.log("Value was set to " + age);
+      setSubmitted(true);
+    });
   };
-  const goHome = (e) => {
-    e.preventDefault();
-    setSubmitted(false);
+  const resetAge = () => {
+    // console.log("reset age");
+    chrome.storage.sync.set({ key: 0 }, function () {
+      // console.log("Value was reset to " + 0);
+      setAge(0);
+      setSubmitted(false);
+    });
   };
   const changeTime = () => {
+    console.log(`switch time from ${time}`);
     switch (time) {
       case "month":
         setTime("year");
+        chrome.storage.sync.set({ time: "year" }, function () {
+          console.log("Time was set to year");
+        });
         break;
       case "year":
         setTime("week");
+        chrome.storage.sync.set({ time: "week" }, function () {
+          console.log("Time was set to week");
+        });
         break;
       case "week":
         setTime("month");
+        chrome.storage.sync.set({ time: "month" }, function () {
+          console.log("Time was set to month");
+        });
         break;
       default:
         break;
@@ -36,9 +65,9 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(time);
+    // console.log(time);
     setGrid(() => {
-      console.log(`grid with new time ${time}`);
+      // console.log(`grid with new time ${time}`);
       const rows = [];
       for (let i = 0; i < rowDict[time]; i++) {
         rows.push(
@@ -49,6 +78,7 @@ function App() {
     });
   }, [time]);
 
+  const textField = <p>enter your age:</p>;
   const inputField = (
     <form>
       <input
@@ -68,7 +98,7 @@ function App() {
   );
 
   const MonthGrid = () => {
-    console.log("renders " + time);
+    // console.log("renders " + time);
     return (
       <FadeIn transitionDuration={2000}>
         <div
@@ -101,7 +131,7 @@ function App() {
   };
 
   const YearGrid = () => {
-    console.log("renders " + time);
+    // console.log("renders " + time);
     return (
       <FadeIn transitionDuration={2000}>
         <div
@@ -134,7 +164,7 @@ function App() {
   };
 
   const WeekGrid = () => {
-    console.log("renders " + time);
+    // console.log("renders " + time);
     return (
       <FadeIn transitionDuration={3000}>
         <div
@@ -177,13 +207,22 @@ function App() {
     </button>
   );
 
+  const resetButton = (
+    <button className="btn-small" onClick={resetAge}>
+      reset
+    </button>
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        {submitted ? <> your life in{timeframe}</> : "enter your age:"}
-      </header>
-      <>{submitted ? gridDict[time] : inputField}</>
-    </div>
+    <FadeIn transitionDuration={1000}>
+      <div className="App">
+        <header className="App-header">
+          {submitted ? <> your life in{timeframe}</> : textField}
+        </header>
+        <>{submitted ? gridDict[time] : inputField}</>
+        {submitted ? resetButton : null}
+      </div>
+    </FadeIn>
   );
 }
 

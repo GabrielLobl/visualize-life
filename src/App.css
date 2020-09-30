@@ -44,6 +44,19 @@ body {
   outline: black;
 }
 
+.btn-small {
+  border: none;
+  background-color: inherit;
+  font-size: 20px;
+  font-family: "Noto Serif", serif;
+  font-weight: 400;
+  color: rgb(80, 80, 80);
+  margin: 25px 0px 10px 0px;
+  cursor: pointer;
+  display: inline-block;
+  outline: black;
+}
+
 .field {
   border: none;
   background-color: inherit;
