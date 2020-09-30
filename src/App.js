@@ -6,6 +6,7 @@ function App() {
   const rowDict = { month: 27, year: 6, week: 65 };
   const colDict = { month: 40, year: 15, week: 72 };
 
+  const [policy, setPolicy] = useState(true);
   const [age, setAge] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [time, setTime] = useState("month");
@@ -14,6 +15,13 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+  };
+
+  const exitPolicy = () => {
+    setPolicy(false);
+  };
+  const enterPolicy = () => {
+    setPolicy(true);
   };
 
   const resetAge = () => {
@@ -186,14 +194,44 @@ function App() {
     </button>
   );
 
+  const policyButton = (
+    <button className="btn-small" onClick={enterPolicy}>
+      policy
+    </button>
+  );
+
+  const privacyPolicy = (
+    <>
+      <h2>Privacy Policy</h2>
+      <p className="btn-small">
+        This chrome extension does not save any data from it's users.
+      </p>
+      <br />
+      <p className="btn-small">
+        All information (the age entered) is saved in the user's chrome storage.
+      </p>
+      <br />
+      <button className="btn-small" onClick={exitPolicy}>
+        exit
+      </button>
+    </>
+  );
+
   return (
     <FadeIn transitionDuration={1000}>
       <div className="App">
-        <header className="App-header">
-          {submitted ? <> your life in{timeframe}</> : textField}
-        </header>
-        <>{submitted ? gridDict[time] : inputField}</>
-        {submitted ? resetButton : null}
+        {policy ? (
+          privacyPolicy
+        ) : (
+          <>
+            <header className="App-header">
+              {submitted ? <> your life in{timeframe}</> : textField}
+            </header>
+            {submitted ? gridDict[time] : inputField}
+            {submitted ? resetButton : null}
+            {policyButton}
+          </>
+        )}
       </div>
     </FadeIn>
   );
